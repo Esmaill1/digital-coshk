@@ -45,7 +45,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <button 
               onClick={toggleLanguage}
-              className="p-2 hover:bg-gray-800 rounded-full transition text-gray-400 hover:text-white flex items-center gap-1"
+              className="hidden md:flex p-2 hover:bg-gray-800 rounded-full transition text-gray-400 hover:text-white items-center gap-1"
               title="Switch Language"
             >
               <Globe className="w-5 h-5" />
@@ -54,7 +54,7 @@ export default function Navbar() {
 
             <button 
               onClick={toggleCart} 
-              className="relative p-2 hover:bg-gray-800 rounded-full transition group"
+              className="hidden md:block relative p-2 hover:bg-gray-800 rounded-full transition group"
             >
               <ShoppingCart className="w-6 h-6 text-gray-300 group-hover:text-white" />
               {itemCount > 0 && (
