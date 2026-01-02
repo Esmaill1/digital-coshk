@@ -1,5 +1,6 @@
 'use client';
 
+// Force redeploy - v1.0.1
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
