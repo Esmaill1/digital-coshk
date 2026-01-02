@@ -20,12 +20,12 @@ export default function Navbar() {
     <nav className="bg-gray-900/80 backdrop-blur-md text-white border-b border-gray-800 sticky top-0 z-30">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-10 h-10 overflow-hidden rounded-full border border-gray-700 group-hover:border-blue-500 transition">
+          <div className="relative w-12 h-12 transition transform group-hover:scale-105">
              <Image 
                src="/logo.png" 
                alt="Digital Coshk Logo" 
                fill
-               className="object-cover"
+               className="object-contain"
              />
           </div>
           <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent hover:opacity-80 transition hidden sm:block">
