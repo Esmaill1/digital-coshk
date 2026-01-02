@@ -26,7 +26,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight"
+              className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight"
             >
               {t('hero.title')}
             </motion.h1>

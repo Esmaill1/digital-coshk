@@ -51,7 +51,7 @@ export default function CartSidebar() {
             animate={{ x: 0 }}
             exit={{ x: direction === 'rtl' ? '-100%' : '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className={`fixed top-0 h-full w-full max-w-md bg-gray-900 border-l border-r border-gray-800 shadow-2xl z-50 flex flex-col ${direction === 'rtl' ? 'left-0' : 'right-0'}`}
+            className={`fixed top-0 h-full w-full md:max-w-md bg-gray-900 border-l border-r border-gray-800 shadow-2xl z-50 flex flex-col ${direction === 'rtl' ? 'left-0' : 'right-0'}`}
           >
             <div className="p-4 border-b border-gray-800 flex justify-between items-center bg-gray-900/50 backdrop-blur-md">
               <h2 className="text-xl font-bold text-white flex items-center gap-2">

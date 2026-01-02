@@ -51,7 +51,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <h3 className="text-xl font-bold text-white mb-2 line-clamp-1">{name}</h3>
         <p className="text-gray-400 text-sm mb-4 flex-grow line-clamp-2">{description}</p>
         
-        <div className="flex items-end justify-between mt-auto">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mt-auto gap-3">
           <div>
             <span className="text-xs text-gray-500 block">{t('product.price')}</span>
             <span className="text-2xl font-bold text-blue-400">
@@ -62,7 +62,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={handleAddToCart}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-300 shadow-lg ${
+            className={`w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-3 sm:py-2 rounded-lg font-semibold transition-all duration-300 shadow-lg ${
               isAdded 
                 ? 'bg-green-600 text-white' 
                 : 'bg-white text-gray-900 hover:bg-gray-100'
@@ -70,11 +70,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           >
             {isAdded ? (
               <>
-                <Check className="w-4 h-4" /> {t('product.added')}
+                <Check className="w-5 h-5" /> {t('product.added')}
               </>
             ) : (
               <>
-                <Plus className="w-4 h-4" /> {t('product.add')}
+                <Plus className="w-5 h-5" /> {t('product.add')}
               </>
             )}
           </motion.button>
