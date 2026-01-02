@@ -3,7 +3,6 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
-import { motion } from 'framer-motion';
 import { Zap, Shield, Gift } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Product } from '@/types/product';
@@ -26,44 +25,25 @@ export default function HomeContent({ initialProducts }: HomeContentProps) {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[120px] -z-10" />
 
           <div className="container mx-auto max-w-4xl relative z-10">
-            <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight"
-            >
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight">
               {t('hero.title')}
-            </motion.h1>
+            </h1>
             
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto"
-            >
+            <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
               {t('hero.subtitle')}
-            </motion.p>
+            </p>
             
-            <motion.div
-               initial={{ opacity: 0, scale: 0.9 }}
-               animate={{ opacity: 1, scale: 1 }}
-               transition={{ duration: 0.5, delay: 0.4 }}
-            >
+            <div>
               <a 
                 href="#products" 
                 className="inline-block bg-blue-600 hover:bg-blue-500 text-white text-lg font-bold py-4 px-10 rounded-full transition transform hover:scale-105 shadow-lg shadow-blue-500/30 ring-1 ring-blue-400/50"
               >
                 {t('hero.cta')}
               </a>
-            </motion.div>
+            </div>
 
             {/* Features Grid */}
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20"
-            >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
               {[
                 { icon: Zap, title: t('features.instant'), desc: t('features.instant.desc') },
                 { icon: Shield, title: t('features.secure'), desc: t('features.secure.desc') },
@@ -77,7 +57,7 @@ export default function HomeContent({ initialProducts }: HomeContentProps) {
                   <p className="text-sm text-gray-500">{feature.desc}</p>
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </section>
 
