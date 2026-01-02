@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { products, Product } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { Plus, Check, Star, ArrowLeft, ArrowRight, Info } from 'lucide-react';
@@ -16,17 +15,30 @@ export default function ProductDetails({ id }: { id: string }) {
   const { addToCart } = useCart();
   const { language, t, direction } = useLanguage();
   const [isAdded, setIsAdded] = useState(false);
-  const [product, setProduct] = useState<Product | undefined>(undefined);
+  const [product, setProduct] = useState<any>(null);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    const found = products.find((p) => p.id === id);
-    if (!found) {
-      notFound();
-    }
-    setProduct(found);
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        const found = data.find((p: any) => p.id === id);
+        if (!found) {
+          setError(true);
+        } else {
+          setProduct(found);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setError(true);
+      });
   }, [id]);
 
-  if (!product) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-white">Loading...</div>;
+  if (error) return notFound();
+  if (!product) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-white">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+  </div>;
 
   const handleAddToCart = () => {
     addToCart(product);
@@ -123,7 +135,7 @@ export default function ProductDetails({ id }: { id: string }) {
                  {t('product.important')}
                </h3>
                <ul className="space-y-3">
-                 {details && details.map((detail, index) => (
+                 {details && details.map((detail: string, index: number) => (
                    <li key={index} className="flex items-start gap-3 text-gray-300 text-sm">
                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0" />
                      {detail}
@@ -139,7 +151,7 @@ export default function ProductDetails({ id }: { id: string }) {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {product.reviews.length > 0 ? (
-              product.reviews.map((review) => (
+              product.reviews.map((review: any) => (
                 <div key={review.id} className="bg-gray-900 border border-gray-800 p-6 rounded-xl">
                   <div className="flex justify-between items-start mb-4">
                     <div>

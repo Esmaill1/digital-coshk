@@ -3,13 +3,37 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
-import { products } from '@/data/products';
 import { motion } from 'framer-motion';
 import { Zap, Shield, Gift } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { useEffect, useState } from 'react';
+
+interface Product {
+  id: string;
+  name: string;
+  nameAr?: string;
+  price: number;
+  currency: string;
+  category: string;
+  description: string;
+  descriptionAr?: string;
+  imageUrl: string;
+}
 
 export default function Home() {
   const { t } = useLanguage();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        setProducts(data);
+        setIsLoading(false);
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-200 font-sans selection:bg-blue-500 selection:text-white">
@@ -87,9 +111,19 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {isLoading ? (
+              <div className="col-span-full flex justify-center py-20">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+              </div>
+            ) : products.length > 0 ? (
+              products.map((product) => (
+                <ProductCard key={product.id} product={product as any} />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-20 text-gray-500">
+                No products found.
+              </div>
+            )}
           </div>
         </section>
       </main>
