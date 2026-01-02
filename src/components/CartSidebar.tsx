@@ -1,20 +1,22 @@
 'use client';
 
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { X, Trash2, ShoppingBag, MessageCircle, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CartSidebar() {
   const { items, removeFromCart, cartTotal, isCartOpen, toggleCart } = useCart();
+  const { language, t, direction } = useLanguage();
 
-  // Replace with actual contact info
   const facebookPageId = "esmaill1"; 
   const redditUsername = "esmaill1"; 
 
   const generateMessage = () => {
     let message = "Hello, I would like to purchase the following:\n\n";
     items.forEach((item) => {
-      message += `- ${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}\n`;
+      const name = language === 'ar' ? item.nameAr || item.name : item.name;
+      message += `- ${name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}\n`;
     });
     message += `\nTotal Price: $${cartTotal.toFixed(2)}`;
     return encodeURIComponent(message);
@@ -24,12 +26,10 @@ export default function CartSidebar() {
   const facebookLink = `https://m.me/${facebookPageId}`; 
   const redditLink = `https://www.reddit.com/message/compose?to=${redditUsername}&subject=New%20Order&message=${message}`;
 
-  // Facebook m.me links don't always support pre-filled messages well on all devices, 
-  // so providing a copy button is often better user experience.
   const copyToClipboard = () => {
      const text = decodeURIComponent(message);
      navigator.clipboard.writeText(text);
-     alert("Order details copied to clipboard! You can paste this in the chat.");
+     alert("Order details copied to clipboard!");
   };
 
   return (
@@ -47,16 +47,16 @@ export default function CartSidebar() {
           
           {/* Sidebar */}
           <motion.div 
-            initial={{ x: '100%' }}
+            initial={{ x: direction === 'rtl' ? '-100%' : '100%' }}
             animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            exit={{ x: direction === 'rtl' ? '-100%' : '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-gray-900 border-l border-gray-800 shadow-2xl z-50 flex flex-col"
+            className={`fixed top-0 h-full w-full max-w-md bg-gray-900 border-l border-r border-gray-800 shadow-2xl z-50 flex flex-col ${direction === 'rtl' ? 'left-0' : 'right-0'}`}
           >
             <div className="p-4 border-b border-gray-800 flex justify-between items-center bg-gray-900/50 backdrop-blur-md">
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 <ShoppingBag className="w-5 h-5 text-blue-500" />
-                Your Cart
+                {t('cart.title')}
               </h2>
               <button onClick={toggleCart} className="p-2 hover:bg-gray-800 rounded-full transition text-gray-400 hover:text-white">
                 <X className="w-6 h-6" />
@@ -67,9 +67,9 @@ export default function CartSidebar() {
               {items.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-gray-500 space-y-4">
                   <ShoppingBag className="w-16 h-16 opacity-20" />
-                  <p>Your cart is empty.</p>
+                  <p>{t('cart.empty')}</p>
                   <button onClick={toggleCart} className="text-blue-500 hover:underline">
-                    Start Shopping
+                    {t('cart.start')}
                   </button>
                 </div>
               ) : (
@@ -84,8 +84,10 @@ export default function CartSidebar() {
                     <div className="relative w-16 h-16 rounded overflow-hidden flex-shrink-0">
                       <img src={item.imageUrl} alt={item.name} className="object-cover w-full h-full" />
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-gray-200 text-sm">{item.name}</h4>
+                    <div className="flex-1 text-start">
+                      <h4 className="font-semibold text-gray-200 text-sm">
+                        {language === 'ar' ? item.nameAr || item.name : item.name}
+                      </h4>
                       <p className="text-blue-400 font-bold text-sm">${item.price.toFixed(2)} x {item.quantity}</p>
                     </div>
                     <button 
@@ -102,16 +104,14 @@ export default function CartSidebar() {
             {items.length > 0 && (
               <div className="p-6 bg-gray-900 border-t border-gray-800 space-y-4">
                 <div className="flex justify-between items-end mb-4">
-                  <span className="text-gray-400">Total</span>
+                  <span className="text-gray-400">{t('cart.total')}</span>
                   <span className="text-3xl font-bold text-white">${cartTotal.toFixed(2)}</span>
                 </div>
 
                 <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-4 text-sm text-blue-200 mb-4">
                   <p className="flex items-start gap-2">
                     <MessageCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                    <span>
-                      Checkout via chat. Click a button below to send your order details directly to us.
-                    </span>
+                    <span>{t('cart.checkout')}</span>
                   </p>
                 </div>
 
@@ -138,7 +138,7 @@ export default function CartSidebar() {
                   onClick={copyToClipboard}
                   className="w-full text-xs text-gray-500 hover:text-gray-300 underline text-center"
                 >
-                  Copy order details manually
+                  {t('cart.copy')}
                 </button>
               </div>
             )}

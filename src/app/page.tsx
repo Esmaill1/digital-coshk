@@ -6,8 +6,11 @@ import ProductCard from '@/components/ProductCard';
 import { products } from '@/data/products';
 import { motion } from 'framer-motion';
 import { Zap, Shield, Gift } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-gray-950 text-gray-200 font-sans selection:bg-blue-500 selection:text-white">
       <Navbar />
@@ -25,7 +28,7 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight"
             >
-              Instant Digital <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Codes</span>
+              {t('hero.title')}
             </motion.h1>
             
             <motion.p 
@@ -34,8 +37,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto"
             >
-              Securely purchase gift cards, software keys, and subscriptions. 
-              Delivered directly to your chat in minutes.
+              {t('hero.subtitle')}
             </motion.p>
             
             <motion.div
@@ -47,7 +49,7 @@ export default function Home() {
                 href="#products" 
                 className="inline-block bg-blue-600 hover:bg-blue-500 text-white text-lg font-bold py-4 px-10 rounded-full transition transform hover:scale-105 shadow-lg shadow-blue-500/30 ring-1 ring-blue-400/50"
               >
-                Browse Catalog
+                {t('hero.cta')}
               </a>
             </motion.div>
 
@@ -59,9 +61,9 @@ export default function Home() {
               className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20"
             >
               {[
-                { icon: Zap, title: "Instant Delivery", desc: "Codes sent immediately after verification." },
-                { icon: Shield, title: "Secure Payments", desc: "Safe manual transactions via trusted platforms." },
-                { icon: Gift, title: "Wide Selection", desc: "Top brands for gaming, streaming & software." },
+                { icon: Zap, title: t('features.instant'), desc: t('features.instant.desc') },
+                { icon: Shield, title: t('features.secure'), desc: t('features.secure.desc') },
+                { icon: Gift, title: t('features.selection'), desc: t('features.selection.desc') },
               ].map((feature, idx) => (
                 <div key={idx} className="bg-gray-900/50 border border-gray-800 p-6 rounded-2xl hover:bg-gray-800/80 transition duration-300">
                   <div className="bg-blue-500/10 w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4 text-blue-400">
@@ -79,8 +81,8 @@ export default function Home() {
         <section id="products" className="py-24 px-4 container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-800 pb-6 gap-4">
             <div>
-              <h2 className="text-4xl font-bold text-white mb-2">Latest Products</h2>
-              <p className="text-gray-400">Hand-picked digital goods for you.</p>
+              <h2 className="text-4xl font-bold text-white mb-2">{t('products.latest')}</h2>
+              <p className="text-gray-400">{t('products.subtitle')}</p>
             </div>
           </div>
           

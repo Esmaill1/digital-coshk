@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Product } from '@/data/products';
 import { useCart } from '@/context/CartContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { Plus, Check } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -13,6 +14,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
+  const { language, t } = useLanguage();
   const [isAdded, setIsAdded] = useState(false);
 
   const handleAddToCart = () => {
@@ -20,6 +22,9 @@ export default function ProductCard({ product }: ProductCardProps) {
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
   };
+
+  const name = language === 'ar' ? product.nameAr || product.name : product.name;
+  const description = language === 'ar' ? product.descriptionAr || product.description : product.description;
 
   return (
     <motion.div 
@@ -33,7 +38,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="relative h-48 w-full overflow-hidden">
         <Image 
           src={product.imageUrl} 
-          alt={product.name}
+          alt={name}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"
         />
@@ -42,13 +47,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
       
-      <div className="p-5 flex flex-col flex-grow relative">
-        <h3 className="text-xl font-bold text-white mb-2 line-clamp-1">{product.name}</h3>
-        <p className="text-gray-400 text-sm mb-4 flex-grow line-clamp-2">{product.description}</p>
+      <div className="p-5 flex flex-col flex-grow relative text-start">
+        <h3 className="text-xl font-bold text-white mb-2 line-clamp-1">{name}</h3>
+        <p className="text-gray-400 text-sm mb-4 flex-grow line-clamp-2">{description}</p>
         
         <div className="flex items-end justify-between mt-auto">
           <div>
-            <span className="text-xs text-gray-500 block">Price</span>
+            <span className="text-xs text-gray-500 block">{t('product.price')}</span>
             <span className="text-2xl font-bold text-blue-400">
               {product.currency} {product.price.toFixed(2)}
             </span>
@@ -65,11 +70,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           >
             {isAdded ? (
               <>
-                <Check className="w-4 h-4" /> Added
+                <Check className="w-4 h-4" /> {t('product.added')}
               </>
             ) : (
               <>
-                <Plus className="w-4 h-4" /> Add
+                <Plus className="w-4 h-4" /> {t('product.add')}
               </>
             )}
           </motion.button>
