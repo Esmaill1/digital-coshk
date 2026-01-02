@@ -26,7 +26,10 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   const name = language === 'ar' ? product.nameAr || product.name : product.name;
-  const description = language === 'ar' ? product.descriptionAr || product.description : product.description;
+  const rawDescription = language === 'ar' ? product.descriptionAr || product.description : product.description;
+  
+  // Strip HTML tags for card view
+  const description = rawDescription.replace(/<[^>]*>?/gm, '');
 
   return (
     <motion.div 

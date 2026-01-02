@@ -108,9 +108,10 @@ export default function ProductDetails({ id }: { id: string }) {
               <span className="text-3xl">{product.currency} {product.price.toFixed(2)}</span>
             </p>
 
-            <p className="text-gray-300 leading-relaxed mb-8 text-lg">
-              {description}
-            </p>
+            <div 
+              className="text-gray-300 leading-relaxed mb-8 text-lg quill-content"
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
 
             <motion.button
               whileTap={{ scale: 0.95 }}
