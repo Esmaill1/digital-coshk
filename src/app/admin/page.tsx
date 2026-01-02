@@ -44,30 +44,52 @@ export default function AdminPage() {
     const method = isEditing === 'new' ? 'POST' : 'PUT';
     const url = isEditing === 'new' ? '/api/products' : `/api/products/${isEditing}`;
 
+    // Clean up data
+    const { 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      id, 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      reviews, 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      createdAt, 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      updatedAt, 
+      ...cleanData 
+    } = formData;
+
+    const payload = {
+      ...cleanData,
+      price: Number(formData.price),
+      longDescription: formData.longDescription || formData.description || '',
+      longDescriptionAr: formData.longDescriptionAr || formData.descriptionAr || '',
+      details: formData.details || [],
+      detailsAr: formData.detailsAr || [],
+      currency: formData.currency || 'USD',
+      imageUrl: formData.imageUrl || ''
+    };
+
     try {
+      setIsLoading(true);
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          price: Number(formData.price),
-          // Hardcoding defaults for new fields for now to keep UI simple
-          longDescription: formData.longDescription || formData.description || '',
-          longDescriptionAr: formData.longDescriptionAr || formData.descriptionAr || '',
-          details: formData.details || [],
-          detailsAr: formData.detailsAr || [],
-          currency: formData.currency || 'USD',
-          imageUrl: formData.imageUrl || ''
-        })
+        body: JSON.stringify(payload)
       });
 
       if (res.ok) {
         setIsEditing(null);
         setFormData({});
-        fetchProducts();
+        await fetchProducts();
+        alert('Product saved successfully!');
+      } else {
+        const errData = await res.json();
+        alert(`Error: ${errData.error || 'Failed to save'}`);
       }
     } catch (err) {
       console.error(err);
+      alert('An unexpected error occurred.');
+    } finally {
+      setIsLoading(false);
     }
   };
 

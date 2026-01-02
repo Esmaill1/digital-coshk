@@ -9,12 +9,11 @@ export async function GET() {
       include: { reviews: true }
     });
     return NextResponse.json(products);
-  } catch (error: any) {
+  } catch (error) {
     console.error('DATABASE_ERROR:', error);
     return NextResponse.json({ 
       error: 'Failed to fetch products', 
-      details: error.message,
-      code: error.code 
+      details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }
 }
@@ -33,6 +32,10 @@ export async function POST(req: Request) {
     });
     return NextResponse.json(product);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create product' }, { status: 500 });
+    console.error('POST_PRODUCT_ERROR:', error);
+    return NextResponse.json({ 
+      error: 'Failed to create product',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
   }
 }

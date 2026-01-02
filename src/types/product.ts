@@ -22,4 +22,6 @@ export interface Product {
   detailsAr: string[];
   imageUrl: string;
   reviews: Review[];
+  createdAt?: string;
+  updatedAt?: string;
 }

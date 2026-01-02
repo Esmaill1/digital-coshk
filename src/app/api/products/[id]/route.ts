@@ -14,8 +14,12 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
       data: body
     });
     return NextResponse.json(product);
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
+  } catch (error) {
+    console.error('PUT_PRODUCT_ERROR:', error);
+    return NextResponse.json({ 
+      error: 'Failed to update product',
+      details: error instanceof Error ? error.message : 'Unknown error' 
+    }, { status: 500 });
   }
 }
 
@@ -29,7 +33,11 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
       where: { id }
     });
     return NextResponse.json({ message: 'Product deleted' });
-  } catch (error: any) {
-    return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 });
+  } catch (error) {
+    console.error('DELETE_PRODUCT_ERROR:', error);
+    return NextResponse.json({ 
+      error: 'Failed to delete product',
+      details: error instanceof Error ? error.message : 'Unknown error' 
+    }, { status: 500 });
   }
 }
