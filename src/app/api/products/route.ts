@@ -9,8 +9,13 @@ export async function GET() {
       include: { reviews: true }
     });
     return NextResponse.json(products);
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
+  } catch (error: any) {
+    console.error('DATABASE_ERROR:', error);
+    return NextResponse.json({ 
+      error: 'Failed to fetch products', 
+      details: error.message,
+      code: error.code 
+    }, { status: 500 });
   }
 }
 

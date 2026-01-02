@@ -18,8 +18,11 @@ export default function Home() {
 
   useEffect(() => {
     fetch('/api/products')
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to fetch');
+      .then(async res => {
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.details || 'Failed to fetch');
+        }
         return res.json();
       })
       .then(data => {
@@ -28,7 +31,7 @@ export default function Home() {
       })
       .catch(err => {
         console.error(err);
-        setError('Could not load products. Please check your database connection.');
+        setError(`Database Error: ${err.message}`);
         setIsLoading(false);
       });
   }, []);
