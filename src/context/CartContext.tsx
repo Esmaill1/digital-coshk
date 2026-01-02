@@ -52,7 +52,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { ...product, quantity: 1 }];
     });
-    setIsCartOpen(true);
+    // setIsCartOpen(true);
   };
 
   const removeFromCart = (productId: string) => {
