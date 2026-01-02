@@ -13,15 +13,23 @@ export default function Home() {
   const { t } = useLanguage();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch('/api/products')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json();
+      })
       .then(data => {
         setProducts(data);
         setIsLoading(false);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        setError('Could not load products. Please check your database connection.');
+        setIsLoading(false);
+      });
   }, []);
 
   return (
@@ -29,7 +37,7 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* Hero Section */}
+        {/* ... Hero Section ... */}
         <section className="relative py-20 px-4 text-center overflow-hidden">
           {/* Background Gradient Blob */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[120px] -z-10" />
@@ -104,13 +112,17 @@ export default function Home() {
               <div className="col-span-full flex justify-center py-20">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
               </div>
+            ) : error ? (
+              <div className="col-span-full text-center py-20 text-red-400 bg-red-900/10 rounded-xl border border-red-900/20">
+                {error}
+              </div>
             ) : products.length > 0 ? (
               products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))
             ) : (
               <div className="col-span-full text-center py-20 text-gray-500">
-                No products found.
+                No products found in the database.
               </div>
             )}
           </div>
