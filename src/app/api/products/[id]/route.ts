@@ -4,7 +4,7 @@ import { auth } from '@clerk/nextjs/server';
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { userId } = await auth();
-  if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!userId || userId !== process.env.ADMIN_USER_ID) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { id } = await params;
   try {
@@ -14,14 +14,14 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
       data: body
     });
     return NextResponse.json(product);
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
   }
 }
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { userId } = await auth();
-  if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!userId || userId !== process.env.ADMIN_USER_ID) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { id } = await params;
   try {
@@ -29,7 +29,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
       where: { id }
     });
     return NextResponse.json({ message: 'Product deleted' });
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 });
   }
 }

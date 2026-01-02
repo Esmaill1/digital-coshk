@@ -7,6 +7,19 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
+  const { userId } = await auth();
+  const isAdminRoute = createRouteMatcher(['/admin(.*)']);
+
+  if (isAdminRoute(req)) {
+    await auth.protect();
+    
+    // Only allow the owner. 
+    // You will need to add your Clerk User ID to Vercel/Local env as ADMIN_USER_ID
+    if (userId !== process.env.ADMIN_USER_ID) {
+      return Response.redirect(new URL('/', req.url));
+    }
+  }
+
   if (isProtectedRoute(req)) await auth.protect();
 });
 

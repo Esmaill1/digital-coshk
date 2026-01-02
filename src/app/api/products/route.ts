@@ -22,10 +22,7 @@ export async function GET() {
 export async function POST(req: Request) {
   const { userId } = await auth();
   
-  // Basic security: Only you (the owner) should be able to post. 
-  // You can check for a specific email or role here.
-  // For now, we'll just check if a user is logged in.
-  if (!userId) {
+  if (!userId || userId !== process.env.ADMIN_USER_ID) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
