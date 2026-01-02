@@ -46,6 +46,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             src={product.imageUrl} 
             alt={name}
             fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             className="object-cover transition-transform duration-500 group-hover:scale-110"
           />
           <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] sm:text-xs font-bold px-1.5 py-0.5 sm:px-2 sm:py-1 rounded border border-white/10">

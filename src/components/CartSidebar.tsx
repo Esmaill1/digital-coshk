@@ -9,8 +9,8 @@ export default function CartSidebar() {
   const { items, removeFromCart, cartTotal, isCartOpen, toggleCart } = useCart();
   const { language, t, direction } = useLanguage();
 
-  const facebookPageId = "esmaill1"; 
-  const redditUsername = "esmaill1"; 
+  const facebookPageId = "61585370096616"; 
+  const redditUsername = "ManyLatter631"; 
 
   const generateMessage = () => {
     let message = "Hello, I would like to purchase the following:\n\n";
