@@ -260,8 +260,8 @@ export default function AdminPage() {
                       <div className="bg-white text-black rounded-lg overflow-hidden">
                         <ReactQuill 
                           theme="snow"
-                          value={formData.description || ''}
-                          onChange={(val) => setFormData({...formData, description: val})}
+                          value={formData.longDescription || ''}
+                          onChange={(val) => setFormData({...formData, longDescription: val})}
                           modules={quillModules}
                         />
                       </div>
@@ -272,8 +272,8 @@ export default function AdminPage() {
                       <div className="bg-white text-black rounded-lg overflow-hidden ql-rtl">
                         <ReactQuill 
                           theme="snow"
-                          value={formData.descriptionAr || ''}
-                          onChange={(val) => setFormData({...formData, descriptionAr: val})}
+                          value={formData.longDescriptionAr || ''}
+                          onChange={(val) => setFormData({...formData, longDescriptionAr: val})}
                           modules={quillModules}
                         />
                       </div>
