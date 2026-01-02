@@ -68,8 +68,8 @@ export default function Navbar() {
               )}
             </button>
 
-            {/* Authentication */}
-            <div className="ml-2 flex items-center min-w-[40px] justify-end">
+            {/* Authentication - Hidden on mobile, visible on desktop */}
+            <div className="hidden md:flex ml-2 items-center min-w-[40px] justify-end">
               <ClerkLoading>
                 <div className="w-8 h-8 rounded-full bg-gray-800 animate-pulse" />
               </ClerkLoading>

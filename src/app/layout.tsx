@@ -22,12 +22,13 @@ export default function RootLayout({
         <head>
         <link rel="preconnect" href="https://humorous-garfish-40.clerk.accounts.dev" crossOrigin="anonymous" />
       </head>
-      <body className={`${inter.className} bg-gray-950 text-white antialiased pb-20 md:pb-0`}>
-          <Providers>
-            {children}
-          </Providers>
-        </body>
-      </html>
+            <body className={`${inter.className} bg-gray-950 text-white antialiased`}>
+              <Providers>
+                <div className="pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
+                  {children}
+                </div>
+              </Providers>
+            </body>      </html>
     </ClerkProvider>
   );
 }
