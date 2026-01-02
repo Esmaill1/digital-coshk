@@ -4,8 +4,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
-import { ShoppingCart, Globe } from 'lucide-react';
+import { ShoppingCart, Globe, User } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 export default function Navbar() {
   const { toggleCart, items } = useCart();
@@ -22,7 +23,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative w-12 h-12 transition transform group-hover:scale-105">
              <Image 
-               src={process.env.NODE_ENV === 'production' ? '/digital-coshk/logo.png' : '/logo.png'}
+               src="/logo.png" 
                alt="Digital Coshk Logo" 
                fill
                className="object-contain"
@@ -64,6 +65,27 @@ export default function Navbar() {
                 </motion.span>
               )}
             </button>
+
+            {/* Authentication */}
+            <div className="ml-2 flex items-center">
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2 px-4 rounded-lg transition">
+                    <User className="w-4 h-4" />
+                    <span className="hidden sm:inline">Sign In</span>
+                  </button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton 
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-9 h-9 border-2 border-blue-500"
+                    }
+                  }}
+                />
+              </SignedIn>
+            </div>
           </div>
         </div>
       </div>

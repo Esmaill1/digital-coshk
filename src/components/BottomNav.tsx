@@ -1,10 +1,9 @@
-'use client';
-
 import Link from 'next/link';
-import { Home, ShoppingBag, ShoppingCart, Globe } from 'lucide-react';
+import { Home, ShoppingBag, ShoppingCart, Globe, User } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 export default function BottomNav() {
   const { toggleCart, items } = useCart();
@@ -18,7 +17,7 @@ export default function BottomNav() {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-lg border-t border-gray-800 z-40 md:hidden pb-safe">
       <div className="flex justify-around items-center p-3">
-        <Link href="#" className="flex flex-col items-center gap-1 text-gray-400 hover:text-blue-500 transition">
+        <Link href="/" className="flex flex-col items-center gap-1 text-gray-400 hover:text-blue-500 transition">
           <Home className="w-6 h-6" />
           <span className="text-[10px] font-medium">{t('nav.home')}</span>
         </Link>
@@ -57,6 +56,23 @@ export default function BottomNav() {
           <Globe className="w-6 h-6" />
           <span className="text-[10px] font-medium uppercase">{language}</span>
         </button>
+
+        <div className="flex flex-col items-center gap-1 text-gray-400 hover:text-blue-500 transition">
+           <SignedOut>
+             <SignInButton mode="modal">
+               <button className="flex flex-col items-center gap-1">
+                 <User className="w-6 h-6" />
+                 <span className="text-[10px] font-medium">Login</span>
+               </button>
+             </SignInButton>
+           </SignedOut>
+           <SignedIn>
+             <div className="mt-1">
+               <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: "w-6 h-6" } }} />
+             </div>
+             <span className="text-[10px] font-medium mt-0.5">Profile</span>
+           </SignedIn>
+        </div>
       </div>
     </div>
   );
