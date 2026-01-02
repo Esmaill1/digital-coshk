@@ -10,19 +10,20 @@ import { Plus, Check, Star, ArrowLeft, ArrowRight, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Product, Review } from '@/types/product';
 
 export default function ProductDetails({ id }: { id: string }) {
   const { addToCart } = useCart();
   const { language, t, direction } = useLanguage();
   const [isAdded, setIsAdded] = useState(false);
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     fetch('/api/products')
       .then(res => res.json())
       .then(data => {
-        const found = data.find((p: any) => p.id === id);
+        const found = data.find((p: Product) => p.id === id);
         if (!found) {
           setError(true);
         } else {
@@ -41,9 +42,11 @@ export default function ProductDetails({ id }: { id: string }) {
   </div>;
 
   const handleAddToCart = () => {
-    addToCart(product);
-    setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 2000);
+    if (product) {
+      addToCart(product);
+      setIsAdded(true);
+      setTimeout(() => setIsAdded(false), 2000);
+    }
   };
 
   const name = language === 'ar' ? product.nameAr || product.name : product.name;
@@ -98,7 +101,7 @@ export default function ProductDetails({ id }: { id: string }) {
                    <Star key={i} className={`w-5 h-5 ${i < 4 ? 'fill-current' : 'text-gray-600'}`} />
                  ))}
                </div>
-               <span className="text-gray-400 text-sm">({product.reviews.length} {t('product.reviews')})</span>
+               <span className="text-gray-400 text-sm">({product.reviews?.length || 0} {t('product.reviews')})</span>
             </div>
 
             <p className="text-xl font-bold text-blue-400 mb-6 flex items-center gap-2">
@@ -150,8 +153,8 @@ export default function ProductDetails({ id }: { id: string }) {
           <h2 className="text-2xl font-bold text-white mb-8">{t('product.reviews')}</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {product.reviews.length > 0 ? (
-              product.reviews.map((review: any) => (
+            {product.reviews && product.reviews.length > 0 ? (
+              product.reviews.map((review: Review) => (
                 <div key={review.id} className="bg-gray-900 border border-gray-800 p-6 rounded-xl">
                   <div className="flex justify-between items-start mb-4">
                     <div>
@@ -164,7 +167,7 @@ export default function ProductDetails({ id }: { id: string }) {
                       ))}
                     </div>
                   </div>
-                  <p className="text-gray-400 text-sm italic">"{review.comment}"</p>
+                  <p className="text-gray-400 text-sm italic">&quot;{review.comment}&quot;</p>
                 </div>
               ))
             ) : (

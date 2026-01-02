@@ -5,18 +5,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Plus, Trash2, Edit2, Save, X, Image as ImageIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-interface Product {
-  id: string;
-  name: string;
-  nameAr: string;
-  price: number;
-  currency: string;
-  category: string;
-  description: string;
-  descriptionAr: string;
-  imageUrl: string;
-}
+import { Product } from '@/types/product';
+import Image from 'next/image';
 
 export default function AdminPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -62,10 +52,12 @@ export default function AdminPage() {
           ...formData,
           price: Number(formData.price),
           // Hardcoding defaults for new fields for now to keep UI simple
-          longDescription: formData.description,
-          longDescriptionAr: formData.descriptionAr,
-          details: [],
-          detailsAr: []
+          longDescription: formData.longDescription || formData.description || '',
+          longDescriptionAr: formData.longDescriptionAr || formData.descriptionAr || '',
+          details: formData.details || [],
+          detailsAr: formData.detailsAr || [],
+          currency: formData.currency || 'USD',
+          imageUrl: formData.imageUrl || ''
         })
       });
 
@@ -172,8 +164,8 @@ export default function AdminPage() {
               )}
             </AnimatePresence>
 
-            <div className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800">
-              <table className="w-full text-left">
+            <div className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 overflow-x-auto">
+              <table className="w-full text-left min-w-[600px]">
                 <thead className="bg-gray-800 text-gray-400 text-sm uppercase">
                   <tr>
                     <th className="px-6 py-4">Product</th>
@@ -186,8 +178,12 @@ export default function AdminPage() {
                   {products.map(p => (
                     <tr key={p.id} className="hover:bg-gray-800/50 transition">
                       <td className="px-6 py-4 flex items-center gap-4">
-                        <div className="w-10 h-10 rounded bg-gray-800 flex items-center justify-center overflow-hidden">
-                          {p.imageUrl ? <img src={p.imageUrl} alt="" className="w-full h-full object-cover" /> : <ImageIcon className="w-5 h-5 text-gray-600" />}
+                        <div className="relative w-10 h-10 rounded bg-gray-800 flex items-center justify-center overflow-hidden">
+                          {p.imageUrl ? (
+                            <Image src={p.imageUrl} alt="" fill className="object-cover" />
+                          ) : (
+                            <ImageIcon className="w-5 h-5 text-gray-600" />
+                          )}
                         </div>
                         <div>
                           <p className="font-bold text-white">{p.name}</p>

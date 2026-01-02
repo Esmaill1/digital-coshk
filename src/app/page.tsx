@@ -7,18 +7,7 @@ import { motion } from 'framer-motion';
 import { Zap, Shield, Gift } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useEffect, useState } from 'react';
-
-interface Product {
-  id: string;
-  name: string;
-  nameAr?: string;
-  price: number;
-  currency: string;
-  category: string;
-  description: string;
-  descriptionAr?: string;
-  imageUrl: string;
-}
+import { Product } from '@/types/product';
 
 export default function Home() {
   const { t } = useLanguage();
@@ -117,7 +106,7 @@ export default function Home() {
               </div>
             ) : products.length > 0 ? (
               products.map((product) => (
-                <ProductCard key={product.id} product={product as any} />
+                <ProductCard key={product.id} product={product} />
               ))
             ) : (
               <div className="col-span-full text-center py-20 text-gray-500">
