@@ -25,6 +25,20 @@ Digital Coshk is a modern, bilingual (English/Arabic) online store specializing 
 - **Content Security Policy:** Configured in `next.config.ts` to safely handle external SVGs and images.
 - **Environment Variables:** All secrets (Database, Clerk) are managed through environment variables.
 
+## Technical Mapping
+- **Translations:** `src/data/translations.ts` (Contains the Egyptian Amia strings).
+- **Database Schema:** `prisma/schema.prisma` (PostgreSQL models).
+- **Auth & Security:** `src/middleware.ts` (Clerk protection logic) and `src/app/layout.tsx` (ClerkProvider).
+- **Admin Logic:** `src/app/admin/page.tsx` (Handles Base64 image uploads and Quill rich text).
+- **Cart Logic:** `src/context/CartContext.tsx` (Uses `localStorage` for persistence).
+- **Language Logic:** `src/context/LanguageContext.tsx` (Handles RTL/LTR switching and `document.dir`).
+- **Product Details:** `src/components/ProductDetails.tsx` (Renders rich text via `dangerouslySetInnerHTML`).
+
+## Critical Notes for Future AI
+- **Hosting:** Project moved from GitHub Pages (static) to **Vercel** (server-side) to support Clerk and Prisma.
+- **Images:** External images from `placehold.co` are allowed in `next.config.ts`. Admin uploads are stored as strings in the DB.
+- **Checkout:** No payment gateway. It's a "Social Checkout" that generates a text summary for Facebook/Reddit.
+
 ## Future Roadmap
 - [ ] Floating WhatsApp support button.
 - [ ] User "My Orders" history page.
