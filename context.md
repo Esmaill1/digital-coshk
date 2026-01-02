@@ -12,7 +12,7 @@ Digital Coshk is a modern, bilingual (English/Arabic) online store specializing 
 - **Deployment:** Vercel
 
 ## Core Features
-1. **Bilingual Support:** Full English and Egyptian Arabic (Amia) support with RTL layout switching.
+1. **Bilingual Support:** Full English and Modern Standard Arabic (MSA) support with RTL layout switching.
 2. **Shopping Cart:** Persistent local storage cart with a bulk-checkout message generator.
 3. **Manual Checkout:** Integrated buttons to send order details via Facebook Messenger or Reddit.
 4. **Admin Panel:** Secured `/admin` dashboard for the owner to manage products (CRUD).
