@@ -203,6 +203,27 @@ export default function AdminPage() {
                       </select>
                     </div>
 
+                    <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <label className="block text-sm font-medium text-gray-400">Short Description (English)</label>
+                        <textarea 
+                          placeholder="Brief summary for product card..." 
+                          className="bg-gray-800 border border-gray-700 p-3 rounded w-full focus:ring-2 focus:ring-blue-500 outline-none h-24 resize-none"
+                          value={formData.description || ''}
+                          onChange={e => setFormData({...formData, description: e.target.value})}
+                        />
+                      </div>
+                      <div className="space-y-4">
+                        <label className="block text-sm font-medium text-gray-400">Short Description (Arabic)</label>
+                        <textarea 
+                          placeholder="وصف مختصر لبطاقة المنتج..." 
+                          className="bg-gray-800 border border-gray-700 p-3 rounded w-full focus:ring-2 focus:ring-blue-500 outline-none h-24 resize-none text-right"
+                          value={formData.descriptionAr || ''}
+                          onChange={e => setFormData({...formData, descriptionAr: e.target.value})}
+                        />
+                      </div>
+                    </div>
+
                     {/* Image Upload */}
                     <div className="md:col-span-2 space-y-4">
                       <label className="block text-sm font-medium text-gray-400">Product Image</label>
