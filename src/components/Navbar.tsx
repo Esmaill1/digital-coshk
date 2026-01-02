@@ -6,7 +6,7 @@ import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { ShoppingCart, Globe, User } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignInButton, SignedIn, SignedOut, UserButton, ClerkLoaded, ClerkLoading } from '@clerk/nextjs';
 
 export default function Navbar() {
   const { toggleCart, items } = useCart();
@@ -69,24 +69,29 @@ export default function Navbar() {
             </button>
 
             {/* Authentication */}
-            <div className="ml-2 flex items-center">
-              <SignedOut>
-                <SignInButton mode="modal">
-                  <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2 px-4 rounded-lg transition">
-                    <User className="w-4 h-4" />
-                    <span className="hidden sm:inline">Sign In</span>
-                  </button>
-                </SignInButton>
-              </SignedOut>
-              <SignedIn>
-                <UserButton 
-                  appearance={{
-                    elements: {
-                      avatarBox: "w-9 h-9 border-2 border-blue-500"
-                    }
-                  }}
-                />
-              </SignedIn>
+            <div className="ml-2 flex items-center min-w-[40px] justify-end">
+              <ClerkLoading>
+                <div className="w-8 h-8 rounded-full bg-gray-800 animate-pulse" />
+              </ClerkLoading>
+              <ClerkLoaded>
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2 px-4 rounded-lg transition">
+                      <User className="w-4 h-4" />
+                      <span className="hidden sm:inline">Sign In</span>
+                    </button>
+                  </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                  <UserButton 
+                    appearance={{
+                      elements: {
+                        avatarBox: "w-9 h-9 border-2 border-blue-500"
+                      }
+                    }}
+                  />
+                </SignedIn>
+              </ClerkLoaded>
             </div>
           </div>
         </div>

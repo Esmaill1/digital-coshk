@@ -3,7 +3,7 @@ import { Home, ShoppingBag, ShoppingCart, Globe, User } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignInButton, SignedIn, SignedOut, UserButton, ClerkLoaded, ClerkLoading } from '@clerk/nextjs';
 
 export default function BottomNav() {
   const { toggleCart, items } = useCart();
@@ -57,21 +57,26 @@ export default function BottomNav() {
           <span className="text-[10px] font-medium uppercase">{language}</span>
         </button>
 
-        <div className="flex flex-col items-center gap-1 text-gray-400 hover:text-blue-500 transition">
-           <SignedOut>
-             <SignInButton mode="modal">
-               <button className="flex flex-col items-center gap-1">
-                 <User className="w-6 h-6" />
-                 <span className="text-[10px] font-medium">Login</span>
-               </button>
-             </SignInButton>
-           </SignedOut>
-           <SignedIn>
-             <div className="mt-1">
-               <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: "w-6 h-6" } }} />
-             </div>
-             <span className="text-[10px] font-medium mt-0.5">Profile</span>
-           </SignedIn>
+        <div className="flex flex-col items-center gap-1 text-gray-400 hover:text-blue-500 transition min-w-[40px]">
+           <ClerkLoading>
+             <div className="w-6 h-6 rounded-full bg-gray-800 animate-pulse mt-1" />
+           </ClerkLoading>
+           <ClerkLoaded>
+             <SignedOut>
+               <SignInButton mode="modal">
+                 <button className="flex flex-col items-center gap-1">
+                   <User className="w-6 h-6" />
+                   <span className="text-[10px] font-medium">Login</span>
+                 </button>
+               </SignInButton>
+             </SignedOut>
+             <SignedIn>
+               <div className="mt-1">
+                 <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: "w-6 h-6" } }} />
+               </div>
+               <span className="text-[10px] font-medium mt-0.5">Profile</span>
+             </SignedIn>
+           </ClerkLoaded>
         </div>
       </div>
     </div>
