@@ -22,7 +22,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative w-12 h-12 transition transform group-hover:scale-105">
              <Image 
-               src="/logo.png" 
+               src={process.env.NODE_ENV === 'production' ? '/digital-coshk/logo.png' : '/logo.png'}
                alt="Digital Coshk Logo" 
                fill
                className="object-contain"
