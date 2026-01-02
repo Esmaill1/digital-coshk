@@ -26,7 +26,9 @@ export default function Navbar() {
                src="/logo.png" 
                alt="Digital Coshk Logo" 
                fill
+               sizes="48px"
                className="object-contain"
+               priority
              />
           </div>
           <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent hover:opacity-80 transition hidden sm:block">

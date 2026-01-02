@@ -19,7 +19,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className="scroll-smooth">
-        <body className={`${inter.className} bg-gray-950 text-white antialiased pb-20 md:pb-0`}>
+        <head>
+        <link rel="preconnect" href="https://humorous-garfish-40.clerk.accounts.dev" crossOrigin="anonymous" />
+      </head>
+      <body className={`${inter.className} bg-gray-950 text-white antialiased pb-20 md:pb-0`}>
           <Providers>
             {children}
           </Providers>
