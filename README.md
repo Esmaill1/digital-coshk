@@ -3,7 +3,7 @@
 A professional, mobile-first digital storefront built with Next.js, optimized for the Egyptian market.
 
 ## 🚀 Live Demo
-[Link to your Vercel Deployment]
+
 
 ## ✨ Features
 - **🌍 Bilingual (EN/AR):** Switch between English and Egyptian Amia with a single click.
